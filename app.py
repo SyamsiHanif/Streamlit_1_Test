@@ -1,26 +1,42 @@
 import streamlit as st
-import pandas as pd
-import numpy as np
 
 # Title of the app
-st.title('My First Streamlit App')
+st.title('Car Price Estimator')
 
-# Add a header
-st.header('Welcome to Streamlit!')
+# Input form
+with st.form(key='car_price_form'):
+    st.header('Enter Car Details')
 
-# Add some text
-st.write('This is a simple Streamlit app for beginners.')
+    levy = st.number_input('Levy', min_value=0, step=1)
+    manufacturer = st.selectbox('Manufacturer', ['Toyota', 'Honda', 'Ford', 'BMW', 'Other'])
+    model = st.text_input('Model')
+    category = st.selectbox('Category', ['Sedan', 'SUV', 'Truck', 'Coupe', 'Convertible'])
+    leather_interior = st.selectbox('Leather Interior', ['Yes', 'No'])
+    fuel_type = st.selectbox('Fuel Type', ['Petrol', 'Diesel', 'Electric', 'Hybrid'])
+    engine_volume = st.number_input('Engine Volume (L)', min_value=0.0, step=0.1)
+    mileage = st.number_input('Mileage (km)', min_value=0, step=100)
+    cylinders = st.number_input('Cylinders', min_value=1, step=1)
+    gearbox_type = st.selectbox('Gearbox Type', ['Manual', 'Automatic'])
+    drive_wheels = st.selectbox('Drive Wheels', ['Front', 'Rear', 'All'])
+    wheel = st.number_input('Wheel Size (inches)', min_value=10, step=1)
+    color = st.selectbox('Color', ['Red', 'Blue', 'Black', 'White', 'Silver', 'Other'])
+    airbags = st.number_input('Airbags', min_value=0, step=1)
+    age = st.number_input('Age (years)', min_value=0, step=1)
 
-# Display an image
-st.image('https://via.placeholder.com/300', caption='Sample Image')
+    # Submit button
+    submit_button = st.form_submit_button(label='Estimate Price')
 
-# Create some random data
-data = np.random.randn(100, 3)
-df = pd.DataFrame(data, columns=['A', 'B', 'C'])
+# Placeholder for price estimation logic
+if submit_button:
+    # Here, you can implement the price estimation logic
+    # For demonstration, we use a simple placeholder formula
+    estimated_price = (
+        10000 - (age * 500) +
+        (engine_volume * 1000) -
+        (mileage * 0.05) +
+        (cylinders * 200) +
+        (airbags * 300)
+    )
 
-# Display a chart
-st.line_chart(df)
-
-# Add an interactive widget
-number = st.slider('Pick a number', 0, 100, 50)
-st.write(f'You selected: {number}')
+    st.subheader('Estimated Car Price')
+    st.write(f'Estimated Price: ${estimated_price:,.2f}')
